@@ -20,6 +20,8 @@ Analogy: HTTP + TLS. SMTP + DKIM. Checklists + type ratings.
 | [`specs/AIP-2-TOP.md`](specs/AIP-2-TOP.md) | Twin Operating Protocol v1.0 (normative) | CC0 |
 | [`schemas/`](schemas/) | JSON Schema (draft 2020-12) for every contract | CC0 |
 | [`examples/`](examples/) | Canonical Travel / Marketing / Finance / Support intents | CC0 |
+| [`tutorials/`](tutorials/) | OpenClaw, Hermes, BYO-framework integration guides | Apache-2.0 |
+| [`docs/why-aixin.md`](docs/why-aixin.md) | When (and when not) to use the protocol, with worked examples | CC0 |
 | `ROADMAP.md` | Execution roadmap through v1.0 + IDO | — |
 
 Spec text is CC0 (maximum reuse). Reference tooling shipped alongside is Apache-2.0.
