@@ -1,0 +1,7 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/bounded-loop.schema.json",
+  "max_steps": 25,
+  "max_spend": 2000,
+  "max_wallclock_seconds": 600,
+  "max_external_calls": 40
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "_reason": "currency must be 3 uppercase letters",
+  "action": "book_flight",
+  "amount": 100,
+  "currency": "usd"
+}

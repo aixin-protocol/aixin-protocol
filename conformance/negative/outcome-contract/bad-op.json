@@ -1,0 +1,8 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/outcome-contract.schema.json",
+  "_reason": "op enum",
+  "objective": "x",
+  "success_metrics": [{ "name": "spend", "op": "!=", "value": 100 }],
+  "principal": "did:example:x",
+  "created_at": "2026-07-24T10:00:00Z"
+}

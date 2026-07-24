@@ -1,0 +1,5 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/bounded-loop.schema.json",
+  "_reason": "missing required max_wallclock_seconds",
+  "max_steps": 10
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "action": "book_flight",
+  "specialist": "travel-concierge",
+  "skill": "flight.rebook.v1",
+  "params": { "carrier": "BA", "destination": "LHR", "class": "economy" },
+  "amount": 1240,
+  "currency": "USD"
+}

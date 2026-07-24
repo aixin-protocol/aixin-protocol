@@ -1,0 +1,18 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/aixin-manifest.schema.json",
+  "_reason": "sip.action_set must be non-empty",
+  "protocol": "aixin/1.0",
+  "agent": { "name": "x", "domain": "x.example" },
+  "sip": { "action_set": [] },
+  "top": {
+    "outcome_contract": "./c.json",
+    "bounds": { "max_steps": 1, "max_wallclock_seconds": 1 },
+    "revocation_key": "0xA1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1"
+  },
+  "registries": {
+    "identity":   { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000001" },
+    "reputation": { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000002" },
+    "validation": { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000003" },
+    "anchor":     { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000004" }
+  }
+}

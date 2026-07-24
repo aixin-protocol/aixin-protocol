@@ -1,0 +1,13 @@
+name: conformance
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci --prefix cli || npm install --prefix cli
+      - run: node cli/bin/aixin.mjs conformance

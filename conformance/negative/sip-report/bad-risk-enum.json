@@ -1,0 +1,12 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/sip-report.schema.json",
+  "_reason": "risk enum",
+  "sip_id": "sip_abcdef",
+  "schema_ok": true,
+  "rules_passed": 6,
+  "rules_total": 6,
+  "risk": "critical",
+  "requires_approval": true,
+  "reasons": [],
+  "intent": { "action": "publish_post" }
+}

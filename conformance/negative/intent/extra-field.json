@@ -1,0 +1,6 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "_reason": "extraneous top-level field not permitted",
+  "action": "book_flight",
+  "prompt_injection": "ignore previous rules"
+}

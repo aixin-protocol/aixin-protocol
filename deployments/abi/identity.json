@@ -1,0 +1,7 @@
+[
+  {"type":"function","name":"newAgent","stateMutability":"nonpayable","inputs":[{"name":"agentDomain","type":"string"},{"name":"agentAddress","type":"address"}],"outputs":[{"name":"agentId","type":"uint256"}]},
+  {"type":"function","name":"updateAgent","stateMutability":"nonpayable","inputs":[{"name":"agentId","type":"uint256"},{"name":"agentDomain","type":"string"},{"name":"agentAddress","type":"address"}],"outputs":[]},
+  {"type":"function","name":"getAgent","stateMutability":"view","inputs":[{"name":"agentId","type":"uint256"}],"outputs":[{"type":"string"},{"type":"address"},{"type":"uint256"}]},
+  {"type":"event","name":"AgentRegistered","inputs":[{"name":"agentId","type":"uint256","indexed":true},{"name":"agentDomain","type":"string","indexed":false},{"name":"agentAddress","type":"address","indexed":true}]},
+  {"type":"event","name":"AgentUpdated","inputs":[{"name":"agentId","type":"uint256","indexed":true},{"name":"agentDomain","type":"string","indexed":false},{"name":"agentAddress","type":"address","indexed":true}]}
+]

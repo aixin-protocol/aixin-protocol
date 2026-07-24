@@ -1,0 +1,15 @@
+{
+  "action": "execute_trade",
+  "specialist": "portfolio-analyst",
+  "skill": "trade.execute@2.0",
+  "params": {
+    "symbol": "BNB-USDT",
+    "side": "buy",
+    "qty": 2.5,
+    "venue": "binance",
+    "type": "limit",
+    "limit_price": 612.4
+  },
+  "amount": 1531,
+  "currency": "USD"
+}

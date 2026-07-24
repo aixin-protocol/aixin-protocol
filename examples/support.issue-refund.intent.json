@@ -1,0 +1,12 @@
+{
+  "action": "issue_refund",
+  "specialist": "support-agent",
+  "skill": "refund.issue@1.1",
+  "params": {
+    "order_id": "ord_9F3A21",
+    "reason": "duplicate_charge",
+    "channel": "stripe"
+  },
+  "amount": 89.5,
+  "currency": "USD"
+}

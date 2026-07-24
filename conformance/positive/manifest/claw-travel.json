@@ -1,0 +1,17 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/aixin-manifest.schema.json",
+  "protocol": "aixin/1.0",
+  "agent": { "name": "claw-travel", "domain": "travel.openclaw.ai" },
+  "sip": { "action_set": ["book_flight", "book_hotel", "monitor_price"], "amount_cap": 5000 },
+  "top": {
+    "outcome_contract": "./contracts/travel.outcome.json",
+    "bounds": { "max_steps": 25, "max_spend": 2000, "max_wallclock_seconds": 600 },
+    "revocation_key": "0xA1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1"
+  },
+  "registries": {
+    "identity":   { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000001" },
+    "reputation": { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000002" },
+    "validation": { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000003" },
+    "anchor":     { "chain": "bsc-testnet", "address": "0x0000000000000000000000000000000000000004" }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "action": "schedule_posts",
+  "specialist": "growth-marketer",
+  "skill": "social.schedule@1.2",
+  "params": {
+    "channel": "linkedin",
+    "posts": 5,
+    "window": "2026-08-01/2026-08-07",
+    "review_required": true
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "_reason": "action is required",
+  "specialist": "travel-concierge"
+}

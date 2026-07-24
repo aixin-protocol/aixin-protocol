@@ -1,0 +1,4 @@
+[
+  {"type":"function","name":"giveFeedback","stateMutability":"nonpayable","inputs":[{"name":"agentServerId","type":"uint256"},{"name":"score","type":"uint8"},{"name":"dataHash","type":"bytes32"},{"name":"dataURI","type":"string"}],"outputs":[]},
+  {"type":"event","name":"FeedbackGiven","inputs":[{"name":"client","type":"address","indexed":true},{"name":"agentServerId","type":"uint256","indexed":true},{"name":"score","type":"uint8","indexed":false},{"name":"dataHash","type":"bytes32","indexed":false},{"name":"dataURI","type":"string","indexed":false}]}
+]

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "_reason": "amount must be > 0",
+  "action": "book_flight",
+  "amount": 0,
+  "currency": "USD"
+}

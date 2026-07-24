@@ -1,0 +1,15 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/sip-report.schema.json",
+  "sip_id": "sip_a1b2c3d4",
+  "schema_ok": true,
+  "rules_passed": 6,
+  "rules_total": 6,
+  "risk": "high",
+  "requires_approval": true,
+  "reasons": [],
+  "intent": {
+    "action": "book_flight",
+    "amount": 1240,
+    "currency": "USD"
+  }
+}

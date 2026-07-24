@@ -1,0 +1,6 @@
+[
+  {"type":"function","name":"validationRequest","stateMutability":"nonpayable","inputs":[{"name":"agentValidatorId","type":"uint256"},{"name":"agentServerId","type":"uint256"},{"name":"dataHash","type":"bytes32"}],"outputs":[]},
+  {"type":"function","name":"validationResponse","stateMutability":"nonpayable","inputs":[{"name":"dataHash","type":"bytes32"},{"name":"response","type":"uint8"}],"outputs":[]},
+  {"type":"event","name":"ValidationRequest","inputs":[{"name":"requester","type":"address","indexed":true},{"name":"agentValidatorId","type":"uint256","indexed":true},{"name":"agentServerId","type":"uint256","indexed":true},{"name":"dataHash","type":"bytes32","indexed":false}]},
+  {"type":"event","name":"ValidationResponse","inputs":[{"name":"responder","type":"address","indexed":true},{"name":"dataHash","type":"bytes32","indexed":true},{"name":"response","type":"uint8","indexed":false}]}
+]

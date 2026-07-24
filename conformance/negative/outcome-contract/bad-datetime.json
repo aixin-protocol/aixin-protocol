@@ -1,0 +1,8 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/outcome-contract.schema.json",
+  "_reason": "created_at must be date-time",
+  "objective": "x",
+  "success_metrics": [],
+  "principal": "did:example:x",
+  "created_at": "yesterday"
+}

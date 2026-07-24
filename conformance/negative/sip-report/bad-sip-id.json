@@ -1,0 +1,12 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/sip-report.schema.json",
+  "_reason": "sip_id must match ^sip_[0-9a-f]{6,}$",
+  "sip_id": "SIP-123",
+  "schema_ok": true,
+  "rules_passed": 6,
+  "rules_total": 6,
+  "risk": "low",
+  "requires_approval": false,
+  "reasons": [],
+  "intent": { "action": "publish_post" }
+}

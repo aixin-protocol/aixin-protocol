@@ -1,0 +1,4 @@
+{
+  "$schema": "https://spec.aixin.io/schemas/intent.schema.json",
+  "action": "publish_post"
+}

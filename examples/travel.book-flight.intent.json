@@ -1,0 +1,15 @@
+{
+  "action": "book_flight",
+  "specialist": "travel-concierge",
+  "skill": "flight.book@1.0",
+  "params": {
+    "origin": "SIN",
+    "destination": "LHR",
+    "depart": "2026-09-14",
+    "return": "2026-09-22",
+    "cabin": "economy",
+    "passengers": 1
+  },
+  "amount": 1240,
+  "currency": "USD"
+}
