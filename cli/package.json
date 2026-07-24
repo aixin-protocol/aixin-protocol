@@ -1,5 +1,5 @@
 {
-  "name": "@aixin/protocol-cli",
+  "name": "@aixin-protocol/cli",
   "version": "1.0.0-rc.1",
   "description": "Validator + conformance runner for the AiXin Protocol (SIP + TOP).",
   "type": "module",
