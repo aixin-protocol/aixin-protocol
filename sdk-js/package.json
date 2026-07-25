@@ -1,0 +1,47 @@
+{
+  "name": "@aixin-protocol/sdk-js",
+  "version": "1.0.0-rc.1",
+  "description": "TypeScript/JavaScript SDK for the AiXin Protocol (SIP + TOP): validate intents, verify receipts, sign locally.",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.mjs"
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "keywords": [
+    "aixin",
+    "sip",
+    "top",
+    "agent",
+    "erc-8004",
+    "receipts",
+    "governance"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aixin-protocol/aixin-protocol.git",
+    "directory": "sdk-js"
+  },
+  "homepage": "https://spec.aixin.io",
+  "bugs": {
+    "url": "https://github.com/aixin-protocol/aixin-protocol/issues"
+  }
+}
