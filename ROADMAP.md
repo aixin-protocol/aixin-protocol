@@ -1,7 +1,7 @@
 # AiXin Roadmap
 
 > Last updated: 2026-07-25
-> Current phase: **Track A ✅ 100% · Track B scaffolding ✅ complete · close the live end-to-end loop next**
+> Current phase: **Track A ✅ 100% · Track B end-to-end loop wired ✅ · capture live demo tx next**
 
 ## Repo map
 
@@ -45,7 +45,8 @@
 - [x] Reference-implementation PRD checked into `aixin-twin`
 
 **Remaining in Phase 3:**
-- [ ] Close the loop end-to-end: live app delegates → validator signs receipt → BSC anchor tx visible in UI
+- [x] Wire the reference app's Decision Card approve flow through `@aixin-protocol/validator-server` for Ed25519 receipt signing (with local fallback when `AIXIN_VALIDATOR_URL` is unset) + BSC Testnet anchor + BscScan link in Governance UI
+- [ ] Capture the live demo tx end-to-end (delegate → validator sig → BSC Testnet anchor tx visible in UI) and screenshot it into the investor deck
 
 ## Phase 4 — Track C: Go-to-Market
 - [ ] Investor demo deck finalization
@@ -59,14 +60,14 @@
 
 ## Immediate next actions
 
-1. **End-to-end live loop** (closes Phase 3): point the deployed app at a running `validator-server`, delegate a real Decision Card, capture the signed receipt + BSC Testnet tx, and screenshot it into the investor deck.
+1. **Capture the live demo tx**: set `AIXIN_VALIDATOR_URL` on the deployed app to a running `@aixin-protocol/validator-server`, approve a Decision Card, and screenshot the Ed25519-signed receipt + BSC Testnet BscScan tx into the investor deck.
 2. **Publish first container image** by cutting `v0.1.0` tag on `aixin-twin` (triggers `container.yml`).
 3. Kick off **Track C** (GTM): waitlist CRO + demo videos.
 
 ## How much is left?
 
 - **Protocol Track A**: ✅ 100% done.
-- **App extraction Track B**: ~85% — scaffold/docker/CI/wiring/PRD shipped; live end-to-end loop + first tagged image remaining before Phase 3 is fully closed.
+- **App extraction Track B**: ~95% — scaffold/docker/CI/wiring/PRD shipped and the reference app now signs + anchors via the extracted validator; only the live demo tx capture + first tagged image remain before Phase 3 is fully closed.
 - **GTM Track C**: not started.
 - **Token launch Track D**: not started.
 
