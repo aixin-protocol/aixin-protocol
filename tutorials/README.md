@@ -16,5 +16,5 @@ Before you start, read [`docs/why-aixin.md`](../docs/why-aixin.md) so you know *
 
 - Node.js ≥ 20
 - An AiXin manifest (`aixin.json`) at your repo root — see [examples/](../examples/)
-- `@aixin/protocol-cli` installed globally: `npm i -g @aixin/protocol-cli`
+- `@aixin-protocol/cli` installed globally: `npm i -g @aixin-protocol/cli`
 - (Optional, for on-chain receipts) A BSC Testnet key with test BNB from the [faucet](https://testnet.bnbchain.org/faucet-smart)

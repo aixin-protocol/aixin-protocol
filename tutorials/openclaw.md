@@ -11,7 +11,7 @@ This walkthrough wraps an OpenClaw agent so that every consequential tool-call i
 ## 1. Install
 
 ```bash
-npm i @aixin/protocol-cli @aixin/sdk viem
+npm i @aixin-protocol/cli @aixin/sdk viem
 ```
 
 ## 2. Add a manifest

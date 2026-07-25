@@ -1,11 +1,11 @@
-# @aixin/protocol-cli
+# @aixin-protocol/cli
 
 Validator + conformance runner for the AiXin Protocol (SIP + TOP).
 
 ## Install
 
 ```bash
-npm i -g @aixin/protocol-cli
+npm i -g @aixin-protocol/cli
 ```
 
 ## Validate a single artifact
