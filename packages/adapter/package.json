@@ -1,0 +1,18 @@
+{
+  "name": "@aixin-protocol/adapter",
+  "version": "0.1.0",
+  "description": "Reverse manifest adapter — convert OpenAI / LangChain / OpenAPI descriptors into canonical AiXin SkillManifests.",
+  "type": "module",
+  "main": "dist/reverse.js",
+  "types": "dist/reverse.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "publishConfig": { "access": "public" },
+  "license": "Apache-2.0"
+}
