@@ -1,14 +1,14 @@
 # AiXin Roadmap
 
 > Last updated: 2026-07-25
-> Current phase: **Track A ✅ 100% · Track B end-to-end loop wired ✅ · capture live demo tx next**
+> Current phase: **Track A ✅ 100% · Track B live loop wired ✅ · Ask AiXin intent-first home shipped ✅ · capture live demo tx next**
 
 ## Repo map
 
 | Repo | Purpose | Status |
 | --- | --- | --- |
 | `aixin-protocol/aixin-protocol` | Protocol specs, CLI, SDKs (JS/Python), reference validator server, whitepapers | ✅ Active, 3 packages published |
-| `aixin-protocol/aixin-twin` *(does not exist yet)* | Reference implementation web app (this Lovable project) extracted into its own repo | ⏳ Track B |
+| `aixin-protocol/aixin-twin` | Reference implementation web app extracted into its own repo | 🟡 Scaffold shipped; live demo tx pending |
 
 ## Phase 0 — Foundation
 - [x] Brand / design system (#FAF9F6 cream, #D97757 coral, #1A1814 dark, Sora/Inter/JetBrains Mono)
@@ -22,53 +22,47 @@
 ## Phase 1 — Protocol Publication
 - [x] Whitepaper v3
 - [x] AIP-1 / AIP-2 normative specs
-- [x] `spec.aixin.io` static site (works at `aixin-protocol.github.io/aixin-protocol`; DNS for custom domain deferred)
+- [x] `spec.aixin.io` static site
 
 ## Phase 2 — Track A: Reference Tooling
 - [x] `@aixin-protocol/cli`
 - [x] `@aixin-protocol/sdk-js`
-- [x] `aixin-protocol-sdk` (Python) — *Trusted Publisher pending on PyPI; code ready*
-- [x] `@aixin-protocol/validator-server` v1.0.0-rc.1
+- [x] `aixin-protocol-sdk` (Python)
 - [x] `@aixin-protocol/validator-server` v1.1.0 with BSC Testnet anchoring
 - [x] Reverse manifest adapter (`@aixin-protocol/adapter` v0.1.0)
 - [x] Quickstart page on spec site
 
 ## Phase 3 — Track B: Reference Implementation Open-Source
-> Goal: extract the Lovable-built AiXin app into a standalone, self-hostable `aixin-twin` repo.
 
 **Scaffolding (done):**
 - [x] Create `aixin-protocol/aixin-twin` GitHub repo
-- [x] Strip Lovable-specific bits and document generic Vite/TanStack Start setup (scaffold preset)
-- [x] Add `docker-compose.yml` for one-liner self-host
-- [x] Publish container image workflow (`ghcr.io/aixin-protocol/aixin-twin`)
-- [x] Wire the app to `@aixin-protocol/validator-server` via `AIXIN_VALIDATOR_URL` (client scaffolded)
-- [x] Reference-implementation PRD checked into `aixin-twin`
+- [x] Vite/TanStack Start scaffold, Docker Compose, GHCR CI, validator wiring, PRD
+- [x] Decision Card approve flow signs via validator-server (Ed25519) + BSC Testnet anchor + BscScan link
+
+**UX polish (done):**
+- [x] Specialist Twin lifecycle (pause / retire / delete)
+- [x] Skill persistence + specialist assignment in SkillCraft
+- [x] Chat UI overhaul ("Twin at Work" panel)
+- [x] **"Ask AiXin" intent-first home at `/dashboard/ask`** — Master Twin hero, domain tiles (Travel · Marketing · Money · Work · Health · Something else), editable goal-starters, animated Chain-of-Thought thinking phase, propose→approve plan card flagging capability gaps, "working 24/7" living state with channel toggles (WhatsApp · WeChat · App). Default landing after sign-in and onboarding.
+- [x] Collapsible sidebar (icon rail ↔ full nav); "Ask AiXin" pinned at top
 
 **Remaining in Phase 3:**
-- [x] Wire the reference app's Decision Card approve flow through `@aixin-protocol/validator-server` for Ed25519 receipt signing (with local fallback when `AIXIN_VALIDATOR_URL` is unset) + BSC Testnet anchor + BscScan link in Governance UI
-- [ ] Capture the live demo tx end-to-end (delegate → validator sig → BSC Testnet anchor tx visible in UI) and screenshot it into the investor deck
+- [ ] Capture the live demo tx end-to-end and screenshot it into the investor deck
+- [ ] Cut `v0.1.0` tag on `aixin-twin` (first published GHCR image)
 
 ## Phase 4 — Track C: Go-to-Market
-- [ ] Investor demo deck finalization
+- [ ] Investor demo deck refresh (add Ask AiXin screenshots + live BscScan tx)
 - [ ] Waitlist + landing CRO
-- [ ] Reference use-case videos (Travel, Marketing, Finance)
+- [ ] Reference use-case videos (Travel, Marketing, Finance) — filmed starting from Ask AiXin
 
 ## Phase 5 — Track D: Tokenomics & Launch
 - [ ] ERC-8004 token contract audit
 - [ ] Pre-IDO simulation → real ledger
 - [ ] Exchange / launch partner integration
 
-## Immediate next actions
-
-1. **Capture the live demo tx**: set `AIXIN_VALIDATOR_URL` on the deployed app to a running `@aixin-protocol/validator-server`, approve a Decision Card, and screenshot the Ed25519-signed receipt + BSC Testnet BscScan tx into the investor deck.
-2. **Publish first container image** by cutting `v0.1.0` tag on `aixin-twin` (triggers `container.yml`).
-3. Kick off **Track C** (GTM): waitlist CRO + demo videos.
-
 ## How much is left?
 
 - **Protocol Track A**: ✅ 100% done.
-- **App extraction Track B**: ~95% — scaffold/docker/CI/wiring/PRD shipped and the reference app now signs + anchors via the extracted validator; only the live demo tx capture + first tagged image remain before Phase 3 is fully closed.
+- **App extraction Track B**: ~97% — only demo tx capture + first tagged image remain.
 - **GTM Track C**: not started.
 - **Token launch Track D**: not started.
-
-Phase 3 scaffolding is complete. The only open Phase 3 item is the live end-to-end loop; once that and the `v0.1.0` tag ship, Track B is 100% and we move to Track C.
