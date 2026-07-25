@@ -4,16 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{TITLE}}</title>
-<link rel="stylesheet" href="/style.css">
+<meta name="description" content="{{DESCRIPTION}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{DESCRIPTION}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="{{BASE}}/style.css">
 </head>
 <body>
-<header>
-  <div class="brand"><a href="/">AiXin Protocol</a> <span class="tag">spec.aixin.io</span></div>
-  <nav>{{NAV}}</nav>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <a href="{{BASE}}/" class="brand-mark">
+        <span class="dot"></span>
+        <span class="brand-name">AiXin Protocol</span>
+      </a>
+      <span class="tag">spec.aixin.io</span>
+    </div>
+    <nav class="site-nav">{{NAV}}</nav>
+  </div>
 </header>
-<main>{{BODY}}</main>
-<footer>
-  <p>AiXin Protocol — Specs CC0, code Apache-2.0. <a href="https://github.com/aixin-protocol/aixin-protocol">Source</a>.</p>
+<main class="wrap"><article class="doc">{{BODY}}</article></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>AiXin Protocol — Specs <strong>CC0</strong>, code <strong>Apache-2.0</strong>. <a href="https://github.com/aixin-protocol/aixin-protocol">Source on GitHub</a>.</p>
+    <p class="muted">The open trust layer for agentic AI.</p>
+  </div>
 </footer>
 </body>
 </html>

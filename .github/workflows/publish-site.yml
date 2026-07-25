@@ -9,6 +9,11 @@ on:
       - 'site/**'
       - 'README.md'
   workflow_dispatch:
+    inputs:
+      base_path:
+        description: 'Base path (empty for custom domain, /aixin-protocol for github.io preview)'
+        required: false
+        default: '/aixin-protocol'
 
 jobs:
   build-deploy:
@@ -17,11 +22,18 @@ jobs:
       contents: read
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - name: Build site
+        env:
+          # Empty when custom domain (spec.aixin.io) is configured in Pages settings.
+          # Otherwise /aixin-protocol so github.io preview resolves assets correctly.
+          BASE_PATH: ${{ github.event.inputs.base_path || '/aixin-protocol' }}
         run: node site/build.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
