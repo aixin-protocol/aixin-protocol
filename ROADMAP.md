@@ -1,7 +1,7 @@
 # AiXin Roadmap
 
-> Last updated: 2026-07-25
-> Current phase: **Track A ✅ 100% · Track B ✅ live loop + Ask AiXin + transparent earnings shipped · Track C GTM next**
+> Last updated: 2026-07-26
+> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped; realism gaps + task management still open · Track C GTM next**
 
 ## Repo map
 
@@ -58,30 +58,36 @@
 - [x] Per-receipt `+$X.XX $AXN` badge on every signed receipt row.
 
 **Sneak-preview closeout (Phase 3):**
-- [x] Live end-to-end loop wired (delegate → validator Ed25519 sig → BSC Testnet anchor → ERC-8004 identity/reputation/validation) — capture the recording during rehearsal.
-- [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image). Manual step in GitHub UI: **Releases → Draft a new release → tag `v0.1.0` → Publish**.
+- [x] Live end-to-end loop wired (delegate → validator Ed25519 sig → BSC Testnet anchor → ERC-8004 identity/reputation/validation).
+- [x] Persistent tasks + task_events with Realtime, task history at `/dashboard/tasks`.
+- [x] ISO badge corrected to **ISO/IEC 42001** everywhere (legacy "ISO 27001" strings removed on receipts/governance UI).
+- [ ] **Realistic intent capture** — before Plan, ask domain-specific follow-ups (Travel: from/to/dates/pax/budget; Marketing: channels/audience/dates; Money: amount/currency/counterparty). No plan is produced until required slots are filled. *Blocks a believable demo.*
+- [ ] **Task management UX** — start a new task while another runs, resume an in-flight task from `/dashboard/tasks` back into the live activity view, archive/delete tasks, "Running" badge in sidebar. *Blocks multi-task demo.*
+- [ ] **On-chain evidence panel** per task — plain-language "what this tx proves" tooltip on every hash (audit anchor = payload hash committed; ERC-8004 Identity = agent registered; Reputation = feedback score signed; Validation = validator request+response). Link each to BscScan with the exact function called.
+- [ ] **ERC-8004 visibility** — surface the three registry txs (Identity / Reputation / Validation) on the Reputation page and the task receipt drawer with contract addresses + BscScan links, not just the audit anchor. Backend already writes them via `erc8004.server.ts`; UI needs to show them.
+- [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image).
 
 ## Phase 4 — Track C: Go-to-Market (sneak preview in days)
+- [x] OpenClaw baseline agent harness shipped to `aixin-protocol/aixin-protocol/demos/openclaw-baseline/` — shared MCP ledger, duplicate-refund trap scenario, and PowerShell setup guide for the honest side-by-side demo.
 - [ ] Investor demo deck refresh (Ask AiXin screenshots + live BscScan tx + earnings-explained panel)
 - [ ] Waitlist landing + CRO copy
-- [ ] Reference use-case videos (Travel, Marketing, Finance) — all filmed starting from the Ask AiXin front door
-- [ ] Sneak-preview run-of-show doc (5-min demo script: hatch → ask → thinking → plan → approve → BscScan → earning breakdown)
+- [ ] Reference use-case videos (Travel, Marketing, Finance) — filmed after the realism fixes above
+- [ ] Sneak-preview run-of-show doc (5-min demo script)
 
 ## Phase 5 — Track D: Tokenomics & Launch
 - [ ] ERC-8004 token contract audit
 - [ ] Pre-IDO simulation → real ledger
 - [ ] Exchange / launch partner integration
 
-## Immediate next actions
+## Minimum to go live (sneak preview)
 
-1. **Record the demo tx once** on the running app (approve a Decision Card, capture the BscScan link + earnings breakdown) — drop screenshots into the investor deck.
-2. **Cut `v0.1.0`** on `aixin-twin` from the GitHub UI to publish the first GHCR image.
-3. **Refresh the investor deck** with Ask AiXin + earnings-explained slides.
-4. **Draft the sneak-preview run-of-show** so anyone on the team can demo the same 5-minute flow.
+Ordered by dependency — do 1–4 before recording anything:
 
-## How much is left?
+1. **Slot-filling before Plan** in `/dashboard/ask` so vague intents ("plan a trip to Paris") trigger a short follow-up form instead of jumping to a fabricated itinerary.
+2. **Task manager**: parallel runs, resume-from-history, archive/delete, "N running" badge.
+3. **On-chain evidence panel**: per-tx explainer + ERC-8004 registry txs surfaced on Reputation + task drawer.
+4. **Copy pass**: replace remaining simulation language with "reference simulation" labels where the backend isn't real yet (channel delivery to WhatsApp/WeChat, token payouts).
+5. Record demo tx + earnings screenshots.
+6. Cut `v0.1.0`, publish GHCR image.
+7. Refresh investor deck + run-of-show.
 
-- **Protocol Track A**: ✅ 100% done.
-- **App extraction Track B**: ✅ 100% wired. Only two out-of-app manual actions remain (record demo tx, cut `v0.1.0` tag) — these are captures/releases, not build work.
-- **GTM Track C**: starting now.
-- **Token launch Track D**: not started.
