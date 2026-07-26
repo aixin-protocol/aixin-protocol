@@ -1,13 +1,18 @@
 # AiXin Roadmap
 
 > Last updated: 2026-07-26
-> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped; realism gaps + task management still open · Track C GTM next**
+> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped; realism gaps + task management still open · Track C 🟡 OpenClaw baseline shipped · Track D (Trust Graph & Contracts) 🔜**
+>
+> **Single source of truth.** This file is the canonical roadmap for both
+> `aixin-protocol/aixin-protocol` and `aixin-protocol/aixin-twin`. Any change
+> here MUST be mirrored to the protocol repo in the same commit — do not keep
+> a divergent copy. If the protocol repo drifts, this file wins.
 
 ## Repo map
 
 | Repo | Purpose | Status |
 | --- | --- | --- |
-| `aixin-protocol/aixin-protocol` | Protocol specs, CLI, SDKs (JS/Python), reference validator server, whitepapers | ✅ Active, 3 packages published |
+| `aixin-protocol/aixin-protocol` | Protocol specs, CLI, SDKs (JS/Python), reference validator server, whitepapers, ERC-8004 contracts | ✅ Active, 3 packages published |
 | `aixin-protocol/aixin-twin` | Reference implementation web app (this Lovable project) extracted into its own repo | 🟡 Scaffold shipped; live demo tx pending |
 
 ## Phase 0 — Foundation
@@ -51,6 +56,9 @@
 - [x] Chat UI overhaul ("Twin at Work" panel, animated status ring)
 - [x] **"Ask AiXin" intent-first home at `/dashboard/ask`** — Master Twin hero, domain tiles (Travel · Marketing · Money · Work · Health · Something else), editable goal-starters, animated Chain-of-Thought thinking phase, propose→approve plan card flagging capability gaps, "working 24/7" living state with channel toggles (WhatsApp · WeChat · App). Default landing after sign-in and onboarding.
 - [x] Collapsible sidebar (icon rail ↔ full nav, `localStorage` persisted); "Ask AiXin" pinned at top
+- [x] Shared Ledger panel at `/dashboard/ledger` (live tables + reset) proving AiXin and OpenClaw hit the same MCP substrate
+- [x] Reset demo data (cascading delete of tasks/cards/receipts, seed restore for ORD-1001)
+- [x] Telegram bot loop (`@aixinchrisbot`) mirroring task threads deterministically
 
 **Earnings transparency (done):**
 - [x] Deterministic per-receipt earning breakdown in `src/lib/earnings.ts` (base + anchor bonus + ERC-8004 receipts + SIP quality × stake multiplier), used by both server (`sip.functions.ts`) and Reputation UI so the Earning Pool total reconciles line-by-line with each signed receipt.
@@ -62,22 +70,52 @@
 - [x] Persistent tasks + task_events with Realtime, task history at `/dashboard/tasks`.
 - [x] ISO badge corrected to **ISO/IEC 42001** everywhere (legacy "ISO 27001" strings removed on receipts/governance UI).
 - [ ] **Realistic intent capture** — before Plan, ask domain-specific follow-ups (Travel: from/to/dates/pax/budget; Marketing: channels/audience/dates; Money: amount/currency/counterparty). No plan is produced until required slots are filled. *Blocks a believable demo.*
-- [ ] **Task management UX** — start a new task while another runs, resume an in-flight task from `/dashboard/tasks` back into the live activity view, archive/delete tasks, "Running" badge in sidebar. *Blocks multi-task demo.*
+- [ ] **Task management UX** — start a new task while another runs, resume an in-flight task from `/dashboard/tasks` back into the live activity view, archive/delete tasks, "Running" badge in sidebar. *Blocks multi-task demo.* (delete shipped; parallel + resume + badge still open)
 - [ ] **On-chain evidence panel** per task — plain-language "what this tx proves" tooltip on every hash (audit anchor = payload hash committed; ERC-8004 Identity = agent registered; Reputation = feedback score signed; Validation = validator request+response). Link each to BscScan with the exact function called.
 - [ ] **ERC-8004 visibility** — surface the three registry txs (Identity / Reputation / Validation) on the Reputation page and the task receipt drawer with contract addresses + BscScan links, not just the audit anchor. Backend already writes them via `erc8004.server.ts`; UI needs to show them.
 - [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image).
 
-## Phase 4 — Track C: Go-to-Market (sneak preview in days)
+## Phase 4 — Track D: Trust Graph & Contracts
+> Goal: turn the receipt trail into a queryable, cryptographically-verifiable trust graph
+> anchored by audited on-chain contracts. This is what makes AiXin a *protocol*, not just
+> a governed app. Lives primarily in `aixin-protocol/aixin-protocol`.
+
+**Contracts (on-chain):**
+- [x] ERC-8004 Identity / Reputation / Validation registries deployed to BSC Testnet
+- [x] `AuditAnchor` contract deployed to BSC Testnet (payload-hash commitments)
+- [ ] **Anchoring fee module** — per-anchor fee in $AXN, split between validator stake pool and burn address; parameterised via governance.
+- [ ] **Validator staking module** — stake $AXN to run a validator; slashable on signed-but-invalid receipts; rewards from anchoring fees.
+- [ ] Third-party contract audit (Identity + Reputation + Validation + Anchor + Fee + Staking as one bundle)
+- [ ] Mainnet deployment plan + multisig ownership handover
+
+**Trust Graph (off-chain, verifiable):**
+- [ ] **Trust Graph indexer** — subgraph / worker that reads every anchor tx + ERC-8004 event and reconstructs the (agent → skill → receipt → validator → outcome) graph.
+- [ ] **Verified sources registry** — signed manifest of "trusted skill publishers" (org DID + Ed25519 pubkey); consumed by validator-server to raise/lower SIP quality scores.
+- [ ] **Public Trust Graph API** (`api.aixin.io/graph`) — read-only GraphQL over the indexed graph so any third party can independently verify a receipt without trusting our app.
+- [ ] **Trust Graph explorer UI** at `spec.aixin.io/graph` — search by agent DID, receipt hash, or validator; renders the provenance chain with BscScan links at every edge.
+- [ ] Reference client: `@aixin-protocol/graph-client` (JS + Python) so integrators can query the graph in three lines.
+
+**Spec work:**
+- [ ] AIP-3: Anchoring fee & validator staking economics
+- [ ] AIP-4: Verified Sources Registry format
+- [ ] AIP-5: Trust Graph query surface
+
+## Phase 5 — Track C: Go-to-Market (sneak preview in days)
 - [x] OpenClaw baseline agent harness shipped to `aixin-protocol/aixin-protocol/demos/openclaw-baseline/` — shared MCP ledger, duplicate-refund trap scenario, and PowerShell setup guide for the honest side-by-side demo.
-- [ ] Investor demo deck refresh (Ask AiXin screenshots + live BscScan tx + earnings-explained panel)
+- [x] Live head-to-head demo script (`DEMO_SCRIPT.md`) + investor addendum deck (`AiXin_Demo_Deck_v7_Live_Demo_Addendum.pptx`).
+- [x] CEO + COO master decks aligned to v7 (Ask AiXin front door, ISO/IEC 42001, Telegram loop).
+- [ ] Investor demo deck refresh (Ask AiXin screenshots + live BscScan tx + earnings-explained panel) — final pass after Phase 3 realism fixes.
 - [ ] Waitlist landing + CRO copy
 - [ ] Reference use-case videos (Travel, Marketing, Finance) — filmed after the realism fixes above
-- [ ] Sneak-preview run-of-show doc (5-min demo script)
+- [ ] Sneak-preview run-of-show doc (5-min demo script) — polished for external distribution
+- [ ] "Repos & Artifacts" investor handout (URLs + versions + commit hashes)
 
-## Phase 5 — Track D: Tokenomics & Launch
-- [ ] ERC-8004 token contract audit
-- [ ] Pre-IDO simulation → real ledger
+## Phase 6 — Tokenomics & Launch
+- [ ] $AXN token contract (post-audit — bundled with Phase 4 audit)
+- [ ] Pre-IDO ledger-preview → real ledger migration (unfreeze non-tradeable balances)
 - [ ] Exchange / launch partner integration
+- [ ] Mainnet launch of Identity / Reputation / Validation / Anchor / Fee / Staking bundle
+- [ ] Token generation event (TGE)
 
 ## Minimum to go live (sneak preview)
 
@@ -90,4 +128,3 @@ Ordered by dependency — do 1–4 before recording anything:
 5. Record demo tx + earnings screenshots.
 6. Cut `v0.1.0`, publish GHCR image.
 7. Refresh investor deck + run-of-show.
-
