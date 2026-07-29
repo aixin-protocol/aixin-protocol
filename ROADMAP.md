@@ -1,7 +1,8 @@
 # AiXin Roadmap
 
-> Last updated: 2026-07-26
-> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped; realism gaps + task management still open · Track C 🟡 OpenClaw baseline shipped · Track D (Trust Graph & Contracts) 🔜**
+> Last updated: 2026-07-29
+> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped · Phase 3.5 (Testnet Go-Live) 🔴 in progress · Track C 🟡 OpenClaw baseline shipped · Track D (Trust Graph & Contracts) 🔜**
+
 >
 > **Single source of truth.** This file is the canonical roadmap for both
 > `aixin-protocol/aixin-protocol` and `aixin-protocol/aixin-twin`. Any change
@@ -76,6 +77,56 @@
 - [ ] **Full ZH i18n coverage (pre-IDO blocker)** — every dashboard route, modal, empty state, toast, error message, tooltip and seeded demo copy must render in Simplified Chinese when the language toggle is set to 中文. Audit for hardcoded English strings across `src/routes/**` and `src/components/**`, move them into `src/lib/i18n.tsx`, then walk every page in both locales before sign-off.
 - [ ] **Mobile-first responsive pass (pre-IDO blocker)** — every page must render cleanly at 375px / 414px / 768px: no horizontal scroll, no clipped headers, no overflowing tables or Decision Cards. Apply the grid + `min-w-0` + `shrink-0` header pattern, make tables scroll or stack as cards, and verify the sidebar, SkillCraft modal, Ask AiXin, Governance, Ledger, Tasks and Specialist detail on a real phone viewport before sign-off.
 - [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image).
+
+## Phase 3.5 — Testnet Go-Live (no simulation where possible)
+> Goal: everything that does **not** depend on the unminted $AXN token runs for real
+> against BSC Testnet and real third-party APIs. The only remaining simulation after this
+> phase is the clearly-labelled **Ledger Preview** (earn / stake / bond / burn / payout).
+> Rule of thumb: if a code path can silently fall back to a fake hash or fake success, it
+> must either become real or fail loudly with a visible "degraded" badge.
+
+**3.5.a — Cryptographic truth (highest priority)**
+- [ ] **Deploy `@aixin-protocol/validator-server` to a public URL** and set `AIXIN_VALIDATOR_URL`. Today the secret is unset, so `validator-client.server.ts` silently falls back to the in-process validator and every receipt is stored with `signature: null` / `public_key: null` — receipts are *hashed but not signed*. This is the single biggest gap to "live".
+- [ ] **Publish the validator public key** (`/v1/pubkey` + `spec.aixin.io/keys`) so any third party can verify a receipt signature offline.
+- [ ] **Remove silent fallbacks** — `validateWithValidator` / `signReceiptWithValidator` must surface `source: "local"` in the UI as a red "unsigned — validator unreachable" badge instead of looking identical to a signed receipt.
+- [ ] **Receipt verification endpoint + UI** — `/verify/:sipId` page and `GET /api/public/verify/:sipId` returning payload hash, signature, pubkey, anchor tx; a "Verify this receipt" button on every receipt row.
+- [ ] **Anchor retry queue** — `anchor.server.ts` currently returns a fake keccak hash on failure with `status:"failed"`. Replace with a durable retry (pg_cron or `/api/public/anchor/retry`) so no receipt is permanently left unanchored, and never mint a fake txHash.
+
+**3.5.b — On-chain surface**
+- [ ] **Register the Master Twin + each Specialist Twin in ERC-8004 Identity at creation time** (persist `agent_id` on the `twins` row) instead of registering ad-hoc per action.
+- [ ] **Register a distinct validator agent** in Identity — validation currently self-validates (`agentValidatorId === agentServerId`), which is not a real trust claim.
+- [ ] **Surface all four txs per action** (Audit Anchor · Identity · Reputation · Validation) with contract addresses + BscScan deep links on the Reputation page and task receipt drawer.
+- [ ] **On-chain evidence explainer** — plain-language "what this tx proves" per hash (moved up from Phase 3).
+- [ ] **Chain health banner** — show gas balance of the anchoring wallet; alert when the faucet balance can no longer cover anchoring. Add a low-balance top-up runbook.
+- [ ] **Contract verification on BscScan** (source + ABI published) for `AuditAnchor` and the three ERC-8004 registries, so the demo links show decoded functions, not raw input.
+
+**3.5.c — Real execution, not theatre**
+- [ ] **Adapter execution is real or blocked** — `execution.server.ts` still emits "Invoking {domain} adapters" as a narration event for any intent with no real tool. Every skill must declare a real adapter; intents with no live adapter must halt with an explicit "no live adapter — cannot execute" outcome instead of an AI-written artifact that looks like a result.
+- [ ] **Remove the AI-generated outcome artifact as a success path** — keep it only as an explicitly labelled "draft / not executed" artifact.
+- [ ] **Gmail adapter live send** (real SMTP/API send + message id in the receipt).
+- [ ] **Webhook adapter live POST** with HMAC signing + delivery status/retries recorded in the receipt.
+- [ ] **Telegram adapter promoted from demo bot to per-user adapter credential** (link/unlink flow, delivery receipts).
+- [ ] **Drop WhatsApp / WeChat channel toggles** from Ask AiXin until a real provider is wired (currently unbacked UI). Ship Telegram + email + in-app only.
+- [ ] **Adapter connectivity test** — a "Test connection" button per adapter that performs a real round-trip and stores `last_verified_at`; a stale/failed adapter blocks Live skills.
+- [ ] **Remove demo-only seed data from the live path** (ORD-1001 refund fixtures) behind an explicit "Demo workspace" flag so a real testnet account starts empty.
+
+**3.5.d — Production readiness**
+- [ ] **Security pass** — run the security scan; confirm RLS + GRANTs on every table (`tasks`, `task_events`, `task_messages`, `task_outcomes`, `receipts`, `decision_cards`, `ledger_entries`, `adapters`, `skills`, `skill_versions`, `telegram_links`), and confirm adapter credentials are stored encrypted/server-only and never returned to the client.
+- [ ] **Rate limiting + auth on `/api/public/*`** (OpenClaw MCP, Telegram webhook): verify Telegram secret token, cap MCP requests, and scope the MCP ledger to the demo workspace only.
+- [ ] **Error budget & observability** — persist server-function failures, anchor failures and validator outages to a `system_events` table with an admin view; no more silent `console.error`.
+- [ ] **Idempotency keys** on refund/execution writes so a double-approve cannot double-pay.
+- [ ] **Auth hardening** — enable leaked-password protection, confirm no anonymous sign-ups, and either wire real Google OAuth or remove the dead WeChat sign-in button.
+- [ ] **Terms / privacy / testnet disclaimer** page: "BSC Testnet only · no real funds · $AXN not minted".
+- [ ] **Full ZH i18n coverage** (pre-IDO blocker — carried from Phase 3, must be green before go-live).
+- [ ] **Mobile-first responsive pass** at 375/414/768px (pre-IDO blocker — carried from Phase 3).
+- [ ] **End-to-end testnet acceptance run**: fresh account → onboard → connect a real adapter → install/author a skill → assign → delegate → Decision Card approve *and* reject → signed receipt (real signature) → 4 txs on BscScan → outcome delivered through a real channel. Record hashes in `TESTNET_RUN.md`.
+- [ ] **Publish to `testnet.aixin.io`** (or the Lovable published URL) with a public status page listing contract addresses, validator pubkey and chain id.
+- [ ] Cut `v0.1.0` tag on `aixin-twin` → first published GHCR image.
+
+**Explicitly still simulated after Phase 3.5 (token-dependent, by design):**
+- Earning pool, staking multiplier, access bonding, burn, payouts — all non-tradeable **Ledger Preview** entries.
+- [ ] **Single simulation boundary** — one `LEDGER_PREVIEW` badge component used everywhere a token-dependent number is shown, so nothing else in the app is allowed to say "simulated".
+
 
 ## Phase 4 — Track D: Trust Graph & Contracts
 > Goal: turn the receipt trail into a queryable, cryptographically-verifiable trust graph
