@@ -73,6 +73,8 @@
 - [ ] **Task management UX** — start a new task while another runs, resume an in-flight task from `/dashboard/tasks` back into the live activity view, archive/delete tasks, "Running" badge in sidebar. *Blocks multi-task demo.* (delete shipped; parallel + resume + badge still open)
 - [ ] **On-chain evidence panel** per task — plain-language "what this tx proves" tooltip on every hash (audit anchor = payload hash committed; ERC-8004 Identity = agent registered; Reputation = feedback score signed; Validation = validator request+response). Link each to BscScan with the exact function called.
 - [ ] **ERC-8004 visibility** — surface the three registry txs (Identity / Reputation / Validation) on the Reputation page and the task receipt drawer with contract addresses + BscScan links, not just the audit anchor. Backend already writes them via `erc8004.server.ts`; UI needs to show them.
+- [ ] **Full ZH i18n coverage (pre-IDO blocker)** — every dashboard route, modal, empty state, toast, error message, tooltip and seeded demo copy must render in Simplified Chinese when the language toggle is set to 中文. Audit for hardcoded English strings across `src/routes/**` and `src/components/**`, move them into `src/lib/i18n.tsx`, then walk every page in both locales before sign-off.
+- [ ] **Mobile-first responsive pass (pre-IDO blocker)** — every page must render cleanly at 375px / 414px / 768px: no horizontal scroll, no clipped headers, no overflowing tables or Decision Cards. Apply the grid + `min-w-0` + `shrink-0` header pattern, make tables scroll or stack as cards, and verify the sidebar, SkillCraft modal, Ask AiXin, Governance, Ledger, Tasks and Specialist detail on a real phone viewport before sign-off.
 - [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image).
 
 ## Phase 4 — Track D: Trust Graph & Contracts
@@ -119,12 +121,14 @@
 
 ## Minimum to go live (sneak preview)
 
-Ordered by dependency — do 1–4 before recording anything:
+Ordered by dependency — do 1–6 before recording anything:
 
 1. **Slot-filling before Plan** in `/dashboard/ask` so vague intents ("plan a trip to Paris") trigger a short follow-up form instead of jumping to a fabricated itinerary.
 2. **Task manager**: parallel runs, resume-from-history, archive/delete, "N running" badge.
 3. **On-chain evidence panel**: per-tx explainer + ERC-8004 registry txs surfaced on Reputation + task drawer.
 4. **Copy pass**: replace remaining simulation language with "reference simulation" labels where the backend isn't real yet (channel delivery to WhatsApp/WeChat, token payouts).
-5. Record demo tx + earnings screenshots.
-6. Cut `v0.1.0`, publish GHCR image.
-7. Refresh investor deck + run-of-show.
+5. **Full ZH i18n coverage** — no English leaks anywhere when the toggle is 中文 (pre-IDO blocker).
+6. **Mobile-first responsive pass** — every page verified at 375/414/768px (pre-IDO blocker).
+7. Record demo tx + earnings screenshots.
+8. Cut `v0.1.0`, publish GHCR image.
+9. Refresh investor deck + run-of-show.
