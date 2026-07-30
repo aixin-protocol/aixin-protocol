@@ -112,9 +112,9 @@
 **3.5.a — Cryptographic truth (highest priority)**
 - [ ] **Deploy `@aixin-protocol/validator-server` to a public URL** and set `AIXIN_VALIDATOR_URL`. Today the secret is unset, so `validator-client.server.ts` silently falls back to the in-process validator and every receipt is stored with `signature: null` / `public_key: null` — receipts are *hashed but not signed*. This is the single biggest gap to "live".
 - [ ] **Publish the validator public key** (`/v1/pubkey` + `spec.aixin.io/keys`) so any third party can verify a receipt signature offline.
-- [ ] **Remove silent fallbacks** — `validateWithValidator` / `signReceiptWithValidator` must surface `source: "local"` in the UI as a red "unsigned — validator unreachable" badge instead of looking identical to a signed receipt.
+- [x] **Remove silent fallbacks** — `signReceiptWithValidator` now returns a `degraded_reason`, persisted on the receipt payload; the Reputation UI shows a red "Unsigned" badge with that reason instead of making an unsigned receipt look signed.
 - [ ] **Receipt verification endpoint + UI** — `/verify/:sipId` page and `GET /api/public/verify/:sipId` returning payload hash, signature, pubkey, anchor tx; a "Verify this receipt" button on every receipt row.
-- [ ] **Anchor retry queue** — `anchor.server.ts` currently returns a fake keccak hash on failure with `status:"failed"`. Replace with a durable retry (pg_cron or `/api/public/anchor/retry`) so no receipt is permanently left unanchored, and never mint a fake txHash.
+- [ ] **Anchor retry queue** — fake keccak hashes are gone (`anchor.server.ts` now returns `txHash: null` and the UI shows "Not anchored"); the remaining work is a durable retry (pg_cron or `/api/public/anchor/retry`) so no receipt is permanently left unanchored.
 
 **3.5.b — On-chain surface**
 - [ ] **Register the Master Twin + each Specialist Twin in ERC-8004 Identity at creation time** (persist `agent_id` on the `twins` row) instead of registering ad-hoc per action.
@@ -127,11 +127,11 @@
 **3.5.c — Real execution, not theatre**
 - [ ] **Adapter execution is real or blocked** — `execution.server.ts` still emits "Invoking {domain} adapters" as a narration event for any intent with no real tool. Every skill must declare a real adapter; intents with no live adapter must halt with an explicit "no live adapter — cannot execute" outcome instead of an AI-written artifact that looks like a result.
 - [ ] **Remove the AI-generated outcome artifact as a success path** — keep it only as an explicitly labelled "draft / not executed" artifact.
-- [ ] **Gmail adapter live send** (real SMTP/API send + message id in the receipt).
+- [x] **Gmail adapter live send** (real SMTP/API send + message id in the receipt).
 - [ ] **Webhook adapter live POST** with HMAC signing + delivery status/retries recorded in the receipt.
 - [ ] **Telegram adapter promoted from demo bot to per-user adapter credential** (link/unlink flow, delivery receipts).
 - [ ] **Drop WhatsApp / WeChat channel toggles** from Ask AiXin until a real provider is wired (currently unbacked UI). Ship Telegram + email + in-app only.
-- [ ] **Adapter connectivity test** — a "Test connection" button per adapter that performs a real round-trip and stores `last_verified_at`; a stale/failed adapter blocks Live skills.
+- [x] **Adapter connectivity test** — a "Test connection" button per adapter that performs a real round-trip and stores `last_verified_at`; a stale/failed adapter blocks Live skills.
 - [ ] **Remove demo-only seed data from the live path** (ORD-1001 refund fixtures) behind an explicit "Demo workspace" flag so a real testnet account starts empty.
 
 **3.5.d — Production readiness**
