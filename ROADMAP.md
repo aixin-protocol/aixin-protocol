@@ -1,7 +1,7 @@
 # AiXin Roadmap
 
-> Last updated: 2026-07-29
-> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped · Phase 3.5 (Testnet Go-Live) 🔴 in progress · Track C 🟡 OpenClaw baseline shipped · Track D (Trust Graph & Contracts) 🔜**
+> Last updated: 2026-07-30
+> Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped · Testnet Go-Live (Phase 3.5) 🔴 in progress · Core protocol / Trust Graph (Phase 4) 🔜 · Post-launch (Phases 5–6) 🔜**
 
 >
 > **Single source of truth.** This file is the canonical roadmap for both
@@ -16,7 +16,47 @@
 | `aixin-protocol/aixin-protocol` | Protocol specs, CLI, SDKs (JS/Python), reference validator server, whitepapers, ERC-8004 contracts | ✅ Active, 3 packages published |
 | `aixin-protocol/aixin-twin` | Reference implementation web app (this Lovable project) extracted into its own repo | 🟡 Scaffold shipped; live demo tx pending |
 
-## Phase 0 — Foundation
+## At a glance
+
+| Phase | Track | Goal | Status |
+| --- | --- | --- | --- |
+| **4 — Core protocol: Trust Graph & Contracts** | D | Queryable, cryptographically-verifiable trust graph over audited contracts — what makes AiXin a *protocol* | 🔜 Next after go-live |
+| 0 — Foundation | — | Brand, i18n, auth, SIP validator, Decision Cards, anchor contract | ✅ Shipped |
+| 1 — Protocol publication | — | Whitepaper v3, AIP-1/AIP-2, spec site | ✅ Shipped |
+| 2 — Reference tooling | A | CLI, JS/Python SDKs, validator-server, reverse adapter, quickstart | ✅ Shipped |
+| 3 — Reference implementation | B | `aixin-twin` open-source app; realism fixes + two pre-IDO blockers | 🟡 In progress |
+| **3.5 — Testnet go-live** | B | Real signatures, real chain txs, real adapters — no silent fakes | 🔴 In progress |
+| **5 — Post-launch: Go-to-market** | C | Demo, decks, waitlist, use-case videos, investor handout | 🟡 Baseline shipped |
+| **6 — Post-launch: Tokenomics & launch** | — | $AXN contract, ledger migration, mainnet bundle, TGE | 🔜 Post-audit |
+
+## Phase 4 — Core protocol: Trust Graph & Contracts (Track D)
+> Goal: turn the receipt trail into a queryable, cryptographically-verifiable trust graph
+> anchored by audited on-chain contracts. This is what makes AiXin a *protocol*, not just
+> a governed app. Lives primarily in `aixin-protocol/aixin-protocol`.
+
+**Contracts (on-chain):**
+- [x] ERC-8004 Identity / Reputation / Validation registries deployed to BSC Testnet
+- [x] `AuditAnchor` contract deployed to BSC Testnet (payload-hash commitments)
+- [ ] **Anchoring fee module** — per-anchor fee in $AXN, split between validator stake pool and burn address; parameterised via governance.
+- [ ] **Validator staking module** — stake $AXN to run a validator; slashable on signed-but-invalid receipts; rewards from anchoring fees.
+- [ ] Third-party contract audit (Identity + Reputation + Validation + Anchor + Fee + Staking as one bundle)
+- [ ] Mainnet deployment plan + multisig ownership handover
+
+**Trust Graph (off-chain, verifiable):**
+- [ ] **Trust Graph indexer** — subgraph / worker that reads every anchor tx + ERC-8004 event and reconstructs the (agent → skill → receipt → validator → outcome) graph.
+- [ ] **Verified sources registry** — signed manifest of "trusted skill publishers" (org DID + Ed25519 pubkey); consumed by validator-server to raise/lower SIP quality scores.
+- [ ] **Public Trust Graph API** (`api.aixin.io/graph`) — read-only GraphQL over the indexed graph so any third party can independently verify a receipt without trusting our app.
+- [ ] **Trust Graph explorer UI** at `spec.aixin.io/graph` — search by agent DID, receipt hash, or validator; renders the provenance chain with BscScan links at every edge.
+- [ ] Reference client: `@aixin-protocol/graph-client` (JS + Python) so integrators can query the graph in three lines.
+
+**Spec work:**
+- [ ] AIP-3: Anchoring fee & validator staking economics
+- [ ] AIP-4: Verified Sources Registry format
+- [ ] AIP-5: Trust Graph query surface
+
+## Shipped foundation (Phases 0–2)
+
+**Phase 0 — Foundation**
 - [x] Brand / design system (#FAF9F6 cream, #D97757 coral, #1A1814 dark, Sora/Inter/JetBrains Mono)
 - [x] Bilingual i18n (EN + ZH)
 - [x] Landing page, auth, onboarding
@@ -25,12 +65,12 @@
 - [x] Decision Cards + signed receipts
 - [x] BSC Testnet audit anchor contract + `anchor.server.ts`
 
-## Phase 1 — Protocol Publication
+**Phase 1 — Protocol publication**
 - [x] Whitepaper v3
 - [x] AIP-1 / AIP-2 normative specs
 - [x] `spec.aixin.io` static site (works at `aixin-protocol.github.io/aixin-protocol`; DNS for custom domain deferred)
 
-## Phase 2 — Track A: Reference Tooling
+**Phase 2 — Track A: Reference tooling**
 - [x] `@aixin-protocol/cli`
 - [x] `@aixin-protocol/sdk-js`
 - [x] `aixin-protocol-sdk` (Python) — *Trusted Publisher pending on PyPI; code ready*
@@ -39,7 +79,7 @@
 - [x] Reverse manifest adapter (`@aixin-protocol/adapter` v0.1.0)
 - [x] Quickstart page on spec site
 
-## Phase 3 — Track B: Reference Implementation Open-Source
+## Phase 3 — Reference implementation open-source (Track B)
 > Goal: extract the Lovable-built AiXin app into a standalone, self-hostable `aixin-twin` repo.
 
 **Scaffolding (done):**
@@ -78,7 +118,7 @@
 - [ ] **Mobile-first responsive pass (pre-IDO blocker)** — every page must render cleanly at 375px / 414px / 768px: no horizontal scroll, no clipped headers, no overflowing tables or Decision Cards. Apply the grid + `min-w-0` + `shrink-0` header pattern, make tables scroll or stack as cards, and verify the sidebar, SkillCraft modal, Ask AiXin, Governance, Ledger, Tasks and Specialist detail on a real phone viewport before sign-off.
 - [ ] Cut `v0.1.0` tag on `aixin-twin` (triggers `container.yml` → first published GHCR image).
 
-## Phase 3.5 — Testnet Go-Live (no simulation where possible)
+## Phase 3.5 — Testnet go-live (no simulation where possible)
 > Goal: everything that does **not** depend on the unminted $AXN token runs for real
 > against BSC Testnet and real third-party APIs. The only remaining simulation after this
 > phase is the clearly-labelled **Ledger Preview** (earn / stake / bond / burn / payout).
@@ -127,33 +167,9 @@
 - Earning pool, staking multiplier, access bonding, burn, payouts — all non-tradeable **Ledger Preview** entries.
 - [ ] **Single simulation boundary** — one `LEDGER_PREVIEW` badge component used everywhere a token-dependent number is shown, so nothing else in the app is allowed to say "simulated".
 
+## Post-launch
 
-## Phase 4 — Track D: Trust Graph & Contracts
-> Goal: turn the receipt trail into a queryable, cryptographically-verifiable trust graph
-> anchored by audited on-chain contracts. This is what makes AiXin a *protocol*, not just
-> a governed app. Lives primarily in `aixin-protocol/aixin-protocol`.
-
-**Contracts (on-chain):**
-- [x] ERC-8004 Identity / Reputation / Validation registries deployed to BSC Testnet
-- [x] `AuditAnchor` contract deployed to BSC Testnet (payload-hash commitments)
-- [ ] **Anchoring fee module** — per-anchor fee in $AXN, split between validator stake pool and burn address; parameterised via governance.
-- [ ] **Validator staking module** — stake $AXN to run a validator; slashable on signed-but-invalid receipts; rewards from anchoring fees.
-- [ ] Third-party contract audit (Identity + Reputation + Validation + Anchor + Fee + Staking as one bundle)
-- [ ] Mainnet deployment plan + multisig ownership handover
-
-**Trust Graph (off-chain, verifiable):**
-- [ ] **Trust Graph indexer** — subgraph / worker that reads every anchor tx + ERC-8004 event and reconstructs the (agent → skill → receipt → validator → outcome) graph.
-- [ ] **Verified sources registry** — signed manifest of "trusted skill publishers" (org DID + Ed25519 pubkey); consumed by validator-server to raise/lower SIP quality scores.
-- [ ] **Public Trust Graph API** (`api.aixin.io/graph`) — read-only GraphQL over the indexed graph so any third party can independently verify a receipt without trusting our app.
-- [ ] **Trust Graph explorer UI** at `spec.aixin.io/graph` — search by agent DID, receipt hash, or validator; renders the provenance chain with BscScan links at every edge.
-- [ ] Reference client: `@aixin-protocol/graph-client` (JS + Python) so integrators can query the graph in three lines.
-
-**Spec work:**
-- [ ] AIP-3: Anchoring fee & validator staking economics
-- [ ] AIP-4: Verified Sources Registry format
-- [ ] AIP-5: Trust Graph query surface
-
-## Phase 5 — Track C: Go-to-Market (sneak preview in days)
+### Phase 5 — Go-to-market (Track C, sneak preview in days)
 - [x] OpenClaw baseline agent harness shipped to `aixin-protocol/aixin-protocol/demos/openclaw-baseline/` — shared MCP ledger, duplicate-refund trap scenario, and PowerShell setup guide for the honest side-by-side demo.
 - [x] Live head-to-head demo script (`DEMO_SCRIPT.md`) + investor addendum deck (`AiXin_Demo_Deck_v7_Live_Demo_Addendum.pptx`).
 - [x] CEO + COO master decks aligned to v7 (Ask AiXin front door, ISO/IEC 42001, Telegram loop).
@@ -163,7 +179,7 @@
 - [ ] Sneak-preview run-of-show doc (5-min demo script) — polished for external distribution
 - [ ] "Repos & Artifacts" investor handout (URLs + versions + commit hashes)
 
-## Phase 6 — Tokenomics & Launch
+### Phase 6 — Tokenomics & launch
 - [ ] $AXN token contract (post-audit — bundled with Phase 4 audit)
 - [ ] Pre-IDO ledger-preview → real ledger migration (unfreeze non-tradeable balances)
 - [ ] Exchange / launch partner integration
