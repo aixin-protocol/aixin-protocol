@@ -114,7 +114,7 @@
 - [ ] **Publish the validator public key** (`/v1/pubkey` + `spec.aixin.io/keys`) so any third party can verify a receipt signature offline.
 - [x] **Remove silent fallbacks** — `signReceiptWithValidator` now returns a `degraded_reason`, persisted on the receipt payload; the Reputation UI shows a red "Unsigned" badge with that reason instead of making an unsigned receipt look signed.
 - [x] **Receipt verification endpoint + UI** — public `GET /api/public/verify/:sipId` (PII-redacted, CORS-enabled) returning payload hash, signature, validator pubkey/URL, anchor tx and ERC-8004 txs, plus a bilingual `/verify/:sipId` page and a "Verify" link on every receipt row on `/dashboard/reputation`.
-- [ ] **Anchor retry queue** — fake keccak hashes are gone (`anchor.server.ts` now returns `txHash: null` and the UI shows "Not anchored"); the remaining work is a durable retry (pg_cron or `/api/public/anchor/retry`) so no receipt is permanently left unanchored.
+- [x] **Anchor retry queue** — fake keccak hashes are gone (`anchor.server.ts` returns `txHash: null` and the UI shows "Not anchored"); a durable retry now exists: `POST /api/public/anchor/retry` (apikey-guarded, batches 10, max 12 attempts, records `anchor_attempts` / `anchor_last_error` / `anchor_last_attempt_at` on each receipt) scheduled by `pg_cron` every 15 minutes, plus `GET` for queue depth.
 
 **3.5.b — On-chain surface**
 - [ ] **Register the Master Twin + each Specialist Twin in ERC-8004 Identity at creation time** (persist `agent_id` on the `twins` row) instead of registering ad-hoc per action.
