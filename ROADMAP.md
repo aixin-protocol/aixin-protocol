@@ -1,6 +1,6 @@
 # AiXin Roadmap
 
-> Last updated: 2026-07-30
+> Last updated: 2026-07-31
 > Current phase: **Track A ✅ · Track B 🟡 real persistence + live anchor shipped · Testnet Go-Live (Phase 3.5) 🔴 in progress · Core protocol / Trust Graph (Phase 4) 🔜 · Post-launch (Phases 5–6) 🔜**
 
 >
@@ -113,7 +113,7 @@
 - [ ] **Deploy `@aixin-protocol/validator-server` to a public URL** and set `AIXIN_VALIDATOR_URL`. Today the secret is unset, so `validator-client.server.ts` silently falls back to the in-process validator and every receipt is stored with `signature: null` / `public_key: null` — receipts are *hashed but not signed*. This is the single biggest gap to "live".
 - [ ] **Publish the validator public key** (`/v1/pubkey` + `spec.aixin.io/keys`) so any third party can verify a receipt signature offline.
 - [x] **Remove silent fallbacks** — `signReceiptWithValidator` now returns a `degraded_reason`, persisted on the receipt payload; the Reputation UI shows a red "Unsigned" badge with that reason instead of making an unsigned receipt look signed.
-- [ ] **Receipt verification endpoint + UI** — `/verify/:sipId` page and `GET /api/public/verify/:sipId` returning payload hash, signature, pubkey, anchor tx; a "Verify this receipt" button on every receipt row.
+- [x] **Receipt verification endpoint + UI** — public `GET /api/public/verify/:sipId` (PII-redacted, CORS-enabled) returning payload hash, signature, validator pubkey/URL, anchor tx and ERC-8004 txs, plus a bilingual `/verify/:sipId` page and a "Verify" link on every receipt row on `/dashboard/reputation`.
 - [ ] **Anchor retry queue** — fake keccak hashes are gone (`anchor.server.ts` now returns `txHash: null` and the UI shows "Not anchored"); the remaining work is a durable retry (pg_cron or `/api/public/anchor/retry`) so no receipt is permanently left unanchored.
 
 **3.5.b — On-chain surface**
