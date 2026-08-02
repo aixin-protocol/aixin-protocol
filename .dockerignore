@@ -1,0 +1,12 @@
+node_modules
+.git
+.output
+.nitro
+.vinxi
+dist
+.env
+.env.*
+!.env.example
+*.log
+/mnt
+.lovable
