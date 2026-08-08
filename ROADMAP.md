@@ -128,6 +128,7 @@
 - [ ] **Adapter execution is real or blocked** — `execution.server.ts` still emits "Invoking {domain} adapters" as a narration event for any intent with no real tool. Every skill must declare a real adapter; intents with no live adapter must halt with an explicit "no live adapter — cannot execute" outcome instead of an AI-written artifact that looks like a result.
 - [ ] **Remove the AI-generated outcome artifact as a success path** — keep it only as an explicitly labelled "draft / not executed" artifact.
 - [x] **Gmail adapter live send** (real SMTP/API send + message id in the receipt).
+- [x] **Email delivery confirmation + error surface** — the Plan step confirms/edits the recipient (mail icon, invalid-state highlight, "use adapter address" shortcut, opt-out toggle), follow-up chat requests ("please send to my email") deliver the existing artifact, and Task detail shows the sent recipient + message id or the exact Gmail failure reason. Decision logic extracted to `src/lib/delivery-rules.ts` with 13 regression tests in `src/lib/delivery-rules.test.ts`.
 - [ ] **Webhook adapter live POST** with HMAC signing + delivery status/retries recorded in the receipt.
 - [ ] **Telegram adapter promoted from demo bot to per-user adapter credential** (link/unlink flow, delivery receipts).
 - [ ] **Drop WhatsApp / WeChat channel toggles** from Ask AiXin until a real provider is wired (currently unbacked UI). Ship Telegram + email + in-app only.
