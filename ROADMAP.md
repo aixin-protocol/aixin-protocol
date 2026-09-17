@@ -200,6 +200,18 @@
 - [ ] **M7 Compliance documentation** — privacy policy, user agreement, minors' clause, permission-usage descriptions, AI content declaration, evidence pack for 备案.
 
 
+## Phase 3.8 — Personal Assistant Twin (Jarvis-class, solo-business first)
+> Goal: the Master Twin works overnight and briefs its owner in the morning — by text **and voice** —
+> while every consequential action still passes SIP. The assistant is *orchestration*: separate
+> SkillCraft skills on focused Specialists (Inbox, Desk, Money, Chief of Staff), never one mega-skill.
+
+- [x] **Phase A — Scheduled governed runs + overnight report** — `assistant_schedules` (user-scoped RLS + grants), a 15-minute scheduler tick at `POST /api/public/assistant/tick` (apikey-guarded, service-role, no PII in responses), and `src/lib/assistant.server.ts`. Two schedule kinds: `morning_report` (built from real tasks, outcomes, pending Decision Cards, receipts/anchors and failed deliveries since a cutoff) and `skill_run` (delegated through `delegateThroughSip`, so a consequential scheduled run lands in the approval queue instead of executing unattended — scheduling changes *when* the twin asks, never *whether* it needs a signature). Bilingual **Telegram voice note** via the AI speech endpoint (OGG/Opus → `sendVoice`) with graceful text-only fallback; every send recorded in `delivery_logs`. UI at `/dashboard/assistant`: create/edit/pause schedules, local-time picker, "Run now", and a live overnight-report preview. Fully EN/ZH.
+- [ ] **Phase B — Gmail read + triage** — inbox read/label scopes, priority triage, and *staged* drafts that require approval before any send.
+- [ ] **Phase C — Solo-business money jobs** — invoice/payment chasing, lead follow-up, order & refund exceptions, overnight business monitoring. Money-touching steps stay Decision-Card gated.
+- [ ] **Phase D — Cited customer/community Q&A** — answers carry citations; referral conversions tracked so claimed outcomes are measurable rather than asserted.
+- [ ] **Phase E — Governed memory** — purpose-limited, inspectable, revocable memory blocks with consent recorded per block.
+- [ ] **Real inbound phone calls** — requires a telephony provider (Twilio or a domestic Chinese carrier) plus number filing; Telegram voice notes ship first and stay the default demo.
+
 
 ## Phase 4 — Core protocol: Trust Graph & Contracts (Track D)
 > Goal: turn the receipt trail into a queryable, cryptographically-verifiable trust graph
